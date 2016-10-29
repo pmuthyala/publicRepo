@@ -14,32 +14,30 @@ public class DHMConcordance {
 
 	private static String fileName = "ConcordanceText.txt";
 	private static List<String> sentences = new ArrayList<>();
-	private static Map<String, Occurance<Integer, TreeSet<Integer>>> result;
+	private static Map<String, Occurance<Integer, StringBuffer>> result;
 	private static TreeSet<Integer> reference;
-	private static Occurance<Integer, TreeSet<Integer>> occ;
+	private static Occurance<Integer, StringBuffer> occ;
 
 	public static void main(String[] a) {
 		FileReader fr = readFile();
 		while (!fr.endOfFile()) {
 			sentences.add(fr.readLine());
 		}
-		result = new TreeMap<String, Occurance<Integer, TreeSet<Integer>>>(new Comparator<String>() {
+		result = new TreeMap<String, Occurance<Integer, StringBuffer>>(new Comparator<String>() {
 			public int compare(String o1, String o2) {
 				return o1.toLowerCase().compareTo(o2.toLowerCase());
 			}
 		});
-
-		System.out.println(sentences.size());
 		int index = 0;
 		for (String s : sentences) {
 			addWords(s, ++index);
 		}
-
 		displayConcordance();
 	}
 
 	private static void displayConcordance() {
-		result.forEach((key, value) -> System.out.println(key + " " + value));
+		byte b[] = {97};
+		result.forEach((key, value) -> System.out.println((char) b[0]++ + ". " + key + " " + value));
 	}
 
 	private static String formatString(String word) {
@@ -55,10 +53,10 @@ public class DHMConcordance {
 		while (st.hasMoreTokens()) {
 			String word = formatString(st.nextToken());
 			occ = result.get(word);
-			if (result.get(word) == null)
-				occ = new Occurance<Integer, TreeSet<Integer>>();
+			if (occ == null)
+				occ = new Occurance<Integer, StringBuffer>(0, new StringBuffer());
 			occ.increment();
-			occ.addSentenceNumber(lineno);
+			occ.appendSentenceNumber("" + lineno);
 			result.put(word, occ);
 		}
 	}

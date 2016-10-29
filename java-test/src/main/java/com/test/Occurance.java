@@ -1,28 +1,24 @@
 package com.test;
 
-import java.util.TreeSet;
-
-public class Occurance<K extends Integer, V extends TreeSet<Integer>> {
+public class Occurance<K extends Integer, V extends StringBuffer> {
 
 	private Integer occCount;
-	private TreeSet<Integer> sentenceNumber;
+	private StringBuffer sentenceNumber;
 
-	public TreeSet<Integer> getSentenceNumber() {
+	public StringBuffer getSentenceNumber() {
 		return sentenceNumber;
 	}
 
-	public void addSentenceNumber(Integer ref) {
-		this.sentenceNumber.add(ref);
+	public void appendSentenceNumber(String ref) {
+		if (this.sentenceNumber.length() == 0)
+			this.sentenceNumber.append(ref);
+		else
+			this.sentenceNumber.append("," + ref);
 	}
 
-	public Occurance(K couoccCount, V reference) {
+	public Occurance(K occCount, V reference) {
 		this.occCount = occCount;
 		this.sentenceNumber = reference;
-	}
-
-	public Occurance() {
-		occCount = 0;
-		sentenceNumber = new TreeSet<Integer>();
 	}
 
 	public void increment() {
@@ -33,9 +29,7 @@ public class Occurance<K extends Integer, V extends TreeSet<Integer>> {
 
 	@Override
 	public String toString() {
-		
-		return "{" + occCount + ":" + sentenceNumber + "}";
+		return "{" + occCount + ":" + sentenceNumber.toString() + "}";
 	}
-	
-	
+
 }
