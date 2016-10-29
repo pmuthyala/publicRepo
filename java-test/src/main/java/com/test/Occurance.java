@@ -5,24 +5,24 @@ import java.util.TreeSet;
 public class Occurance<K extends Integer, V extends TreeSet<Integer>> {
 
 	private Integer occCount;
-	private TreeSet<Integer> reference;
+	private TreeSet<Integer> sentenceNumber;
 
-	public TreeSet<Integer> getReference() {
-		return reference;
+	public TreeSet<Integer> getSentenceNumber() {
+		return sentenceNumber;
 	}
 
-	public void addReference(Integer ref) {
-		this.reference.add(ref);
+	public void addSentenceNumber(Integer ref) {
+		this.sentenceNumber.add(ref);
 	}
 
 	public Occurance(K couoccCount, V reference) {
 		this.occCount = occCount;
-		this.reference = reference;
+		this.sentenceNumber = reference;
 	}
 
 	public Occurance() {
 		occCount = 0;
-		reference = new TreeSet<Integer>();
+		sentenceNumber = new TreeSet<Integer>();
 	}
 
 	public void increment() {
@@ -33,7 +33,8 @@ public class Occurance<K extends Integer, V extends TreeSet<Integer>> {
 
 	@Override
 	public String toString() {
-		return "Occurance [occCount=" + occCount + ", reference=" + reference + "]";
+		
+		return "{" + occCount + ":" + sentenceNumber + "}";
 	}
 	
 	
