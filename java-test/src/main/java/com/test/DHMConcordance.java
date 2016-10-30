@@ -7,40 +7,56 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 public class DHMConcordance {
 
-	private static String fileName = "ConcordanceText.txt";
-	private static List<String> sentences = new ArrayList<>();
-	private static Map<String, Occurance<Integer, StringBuffer>> result;
-	private static TreeSet<Integer> reference;
-	private static Occurance<Integer, StringBuffer> occ;
-
+	private String fileName = "ConcordanceText.txt";
+	private List<String> sentences = new ArrayList<>();
+	private Map<String, Occurance<Integer, StringBuffer>> result;
+	private Occurance<Integer, StringBuffer> occ;
+	private FileReader fr;
+	
 	public static void main(String[] a) {
-		FileReader fr = readFile();
-		while (!fr.endOfFile()) {
-			sentences.add(fr.readLine());
-		}
+		(new DHMConcordance()).run();
+	}
+
+	private void run() {
+		readFile();
+		readLinesFromFile();
+		initResultMap();
+		buildConcordance();
+		displayConcordance();
+	}
+
+
+	private void initResultMap() {
 		result = new TreeMap<String, Occurance<Integer, StringBuffer>>(new Comparator<String>() {
 			public int compare(String o1, String o2) {
 				return o1.toLowerCase().compareTo(o2.toLowerCase());
 			}
 		});
+	}
+
+	public void readLinesFromFile() {	
+		while (!fr.endOfFile()) {
+			sentences.add(fr.readLine());
+		}
+	}
+
+	public void buildConcordance() {
 		int index = 0;
 		for (String s : sentences) {
 			addWords(s, ++index);
 		}
-		displayConcordance();
 	}
 
-	private static void displayConcordance() {
+	private void displayConcordance() {
 		result.forEach(
 				(key, value) -> System.out.println(RowIndex.INSTANCE.getIndex() + ".  " + key + "       " + value));
 	}
 
-	private static String formatString(String word) {
+	public String formatString(String word) {
 		String formattedString;
 		formattedString = word.trim().toLowerCase();
 		Pattern p = Pattern.compile("[:,.]+$");
@@ -48,7 +64,7 @@ public class DHMConcordance {
 		return formattedString;
 	}
 
-	public static void addWords(String line, int lineno) {
+	public void addWords(String line, int lineno) {
 		StringTokenizer st = new StringTokenizer(line.trim(), " ");
 		while (st.hasMoreTokens()) {
 			String word = formatString(st.nextToken());
@@ -61,15 +77,15 @@ public class DHMConcordance {
 		}
 	}
 
-	private static FileReader readFile() {
-		FileReader fr = new FileReader();
+	public void readFile() {
+		fr = new FileReader();
 		fr.readInputFile(FileSystems.getDefault().getPath("", fileName).toAbsolutePath().toString());
-		return fr;
 	}
 
 	public static class RowIndex {
 		private byte b, i;
 		private StringBuffer sb;
+
 		public RowIndex() {
 			b = 97;
 			i = 0;
@@ -90,6 +106,7 @@ public class DHMConcordance {
 			b++;
 			return sb.toString();
 		}
+
 		public static final RowIndex INSTANCE = new RowIndex();
 	}
 }
