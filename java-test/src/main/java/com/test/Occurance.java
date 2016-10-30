@@ -1,8 +1,8 @@
 package com.test;
 
-public class Occurance<K extends Integer, V extends StringBuffer> {
+public class Occurance<K extends Number, V> {
 
-	private Integer occCount;
+	private K occCount;
 	private StringBuffer sentenceNumber;
 
 	public StringBuffer getSentenceNumber() {
@@ -16,7 +16,7 @@ public class Occurance<K extends Integer, V extends StringBuffer> {
 			this.sentenceNumber.append("," + ref);
 	}
 
-	public Occurance(K occCount, V reference) {
+	public Occurance(K occCount, StringBuffer reference) {
 		this.occCount = occCount;
 		this.sentenceNumber = reference;
 	}
@@ -24,7 +24,7 @@ public class Occurance<K extends Integer, V extends StringBuffer> {
 	public void increment() {
 		int i = occCount.intValue();
 		i++;
-		occCount = new Integer(i);
+		occCount = (K) new Integer(i);
 	}
 
 	@Override

@@ -36,8 +36,8 @@ public class DHMConcordance {
 	}
 
 	private static void displayConcordance() {
-		byte b[] = {97};
-		result.forEach((key, value) -> System.out.println((char) b[0]++ + ". " + key + " " + value));
+		result.forEach(
+				(key, value) -> System.out.println(RowIndex.INSTANCE.getIndex() + ".  " + key + "       " + value));
 	}
 
 	private static String formatString(String word) {
@@ -65,5 +65,31 @@ public class DHMConcordance {
 		FileReader fr = new FileReader();
 		fr.readInputFile(FileSystems.getDefault().getPath("", fileName).toAbsolutePath().toString());
 		return fr;
+	}
+
+	public static class RowIndex {
+		private byte b, i;
+		private StringBuffer sb;
+		public RowIndex() {
+			b = 97;
+			i = 0;
+			sb = new StringBuffer();
+			sb.append((char) b);
+		}
+
+		public String getIndex() {
+			if (b == 123) {
+				b = 97;
+				sb.setCharAt(i, (char) b);
+				sb.append((char) b);
+				i++;
+			} else {
+				for (int k = 0; k <= i; k++)
+					sb.setCharAt(k, (char) b);
+			}
+			b++;
+			return sb.toString();
+		}
+		public static final RowIndex INSTANCE = new RowIndex();
 	}
 }
