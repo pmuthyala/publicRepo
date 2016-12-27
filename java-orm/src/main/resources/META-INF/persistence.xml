@@ -8,9 +8,9 @@
 	<persistence-unit name="mysql-pu"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.java.orm.A</class>
-		<class>com.java.orm.B</class>
-		<class>com.java.orm.C</class>
+		<class>com.jpa.orm.A</class>
+		<class>com.jpa.orm.B</class>
+		<class>com.jpa.orm.C</class>
 		
 		<properties>
            <property name="hibernate.show_sql" value="true"/>
