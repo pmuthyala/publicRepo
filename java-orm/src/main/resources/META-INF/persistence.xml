@@ -8,13 +8,13 @@
 	<persistence-unit name="mysql-pu"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.jpa.orm.A</class>
-		<class>com.jpa.orm.B</class>
-		<class>com.jpa.orm.C</class>
+		<class>com.jpa.orm.Employee</class>
+		<class>com.jpa.orm.Department</class>
+		<class>com.jpa.orm.Project</class>
 		
 		<properties>
            <property name="hibernate.show_sql" value="true"/>
-           <property name="hibernate.hbm2ddl.auto" value="create"/>
+           <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
            
            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/world" />

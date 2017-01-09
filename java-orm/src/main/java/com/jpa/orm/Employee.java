@@ -2,24 +2,44 @@ package com.jpa.orm;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "A")
-public class A implements Serializable {
+@Table(name = "Employee")
+public class Employee implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private String s;
-	private ZonedDateTime zdt;
+	private String name;
+	private ZonedDateTime startDate;
+	private Department dept;
+
+	private Set<Project> projects;
+
+	public Employee(String name, ZonedDateTime startDate, Long deptId) {
+		this.name = name;
+		this.startDate = startDate;
+		this.dept = new Department(deptId);
+	}
 
 	@Id
+	@Column(name = "ID")
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	public Long getId() {
 		return id;
 	}
@@ -28,20 +48,41 @@ public class A implements Serializable {
 		this.id = id;
 	}
 
-	public String getS() {
-		return s;
+	@Column(name = "name")
+	public String getName() {
+		return name;
 	}
 
-	public void setS(String s) {
-		this.s = s;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public ZonedDateTime getZdt() {
-		return zdt;
+	@Column(name = "startDate")
+	public ZonedDateTime getStartDate() {
+		return startDate;
 	}
 
-	public void setZdt(ZonedDateTime zdt) {
-		this.zdt = zdt;
+	public void setStartDate(ZonedDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	public Department getDept() {
+		return dept;
+	}
+
+	public void setDept(Department dept) {
+		this.dept = dept;
+	}
+
+	@ManyToMany
+	@JoinTable(name = "EMP_PROJ", joinColumns = @JoinColumn(name = "EMP_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "PROJ_ID", referencedColumnName = "ID"))
+	public Set<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(Set<Project> projects) {
+		this.projects = projects;
 	}
 
 }
