@@ -39,7 +39,7 @@ public class Employee implements Serializable {
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -67,6 +67,7 @@ public class Employee implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "DEPT_ID", nullable = false)
 	public Department getDept() {
 		return dept;
 	}

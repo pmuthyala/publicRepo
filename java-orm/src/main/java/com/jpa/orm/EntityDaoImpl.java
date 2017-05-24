@@ -4,6 +4,10 @@ import java.time.ZonedDateTime;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 public class EntityDaoImpl {
 
@@ -46,7 +50,6 @@ public class EntityDaoImpl {
 		System.out.println(d.getId());
 		
 		em.getTransaction().commit();
-		em.close();
 		System.out.println("Again>>"+d.getId());
 		//em.persist(new Employee());
 	}
@@ -54,6 +57,18 @@ public class EntityDaoImpl {
 		//Long x = 1667l, y = 1667l;
 		//if(x.longValue()==y.longValue())
 			//System.out.println("Same");
-		new EntityDaoImpl();
+		EntityDaoImpl impl = new EntityDaoImpl();
+		impl.readData();
+	}
+	
+	public void readData() {
+		Employee e = em.find(Employee.class, 7l);
+		System.out.println(e.getName());
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery cq = cb.createQuery(Employee.class);
+		Root r = cq.from(Employee.class);
+		cq.select(r).where(cb.equal(r.get("dept").get("name"), "HR"));
+
 	}
 }

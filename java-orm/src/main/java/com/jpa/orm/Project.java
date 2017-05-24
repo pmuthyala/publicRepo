@@ -34,7 +34,7 @@ public class Project implements Serializable {
 	
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue (strategy = GenerationType.TABLE)
+	@GeneratedValue (strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
