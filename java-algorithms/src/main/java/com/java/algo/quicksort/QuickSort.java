@@ -25,23 +25,23 @@ public class QuickSort {
 	}
 	
 	private static int partition(int []a, int low, int high) {
-		int pivot = a[high];
-		int i = (low - 1);
 		for(int j= low; j < high; j++) {
-			if(a[j] <= pivot) {
-				i++;
-				int temp = a[i];
-				a[i] = a[j];
+			if(a[j] <= a[high]) {
+				int temp = a[low];
+				a[low] = a[j];
 				a[j] = temp;
 				printArray("inside loop  : ", a);
+				low++;
 			}
 		}
 		printArray("after loop   : ", a);
-		int temp = a[i + 1];
-		a[i + 1] = a[high];
-		a[high] = temp;
+		if(a[low] > a[high]) {
+			int temp = a[low];
+			a[low] = a[high];
+			a[high] = temp;
+		}
 		printArray("after swap   : ", a);
-		return i + 1;
+		return low;
 	}
 	
 	private static void printArray(String msg, int [] a) {
