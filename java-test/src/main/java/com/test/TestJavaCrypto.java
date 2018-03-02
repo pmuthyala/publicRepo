@@ -16,7 +16,7 @@ public class TestJavaCrypto {
 
 	private static final String CIPHER_TRANSFORMATION_DESede = "DESede/CBC/PKCS5Padding";
 	private static final String CIPHER_DESede_ALGO = "DESede";
-	private static final String ENCRYPTION_KEY = "keyshouldbesomebitslongsojustaddingmorenumbers1234567890inthekey";
+	private static final String ENCRYPTION_KEY = "shouldbesomebitslongsojustaddingmorenumbers1234567890inthekey";
 	private static final String MESSAGE = "Test Message which is a multiple of 16 to encrypt and decrypt ";
 
 	public static void main(String[] a) throws NoSuchAlgorithmException,
@@ -37,7 +37,7 @@ public class TestJavaCrypto {
 		Cipher c = Cipher.getInstance(CIPHER_TRANSFORMATION_DESede);
 		SecretKeySpec sKey = new SecretKeySpec(desKeyData, CIPHER_DESede_ALGO);
 		c.init(Cipher.ENCRYPT_MODE, sKey,
-				new IvParameterSpec("INITVECTOR".getBytes("UTF-8")));
+				new IvParameterSpec(c));
 
 		byte[] encryptedString = c.doFinal(plainText);
 
