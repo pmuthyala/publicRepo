@@ -43,7 +43,7 @@ public class Project implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "term")
+	//@Column(name = "term")
 	public Integer getTerm() {
 		return term;
 	}

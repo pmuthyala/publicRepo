@@ -15,7 +15,8 @@ public class EntityDaoImpl {
 	private EntityManager em;
 
 	public EntityDaoImpl() {
-		em = Persistence.createEntityManagerFactory("mysql-pu").createEntityManager();
+		//em = Persistence.createEntityManagerFactory("mysql-pu").createEntityManager();
+		em = Persistence.createEntityManagerFactory("postgres-pu").createEntityManager();
 		loadData();
 	}
 

@@ -3,7 +3,6 @@ package com.jpa.orm;
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -43,7 +42,7 @@ public class Department implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "name")
+	//@Column(name = "name")
 	public String getName() {
 		return name;
 	}
