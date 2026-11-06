@@ -29,7 +29,7 @@ public class Main {
         /**
          * Pattern matching for instanceof
          */
-        TradeEvent event = new TradeEvent("BUY");
+        TradingEvent event = new TradeEvent("BUY");
         //...
         if (event instanceof TradeEvent trade) {
             processTrade(trade);

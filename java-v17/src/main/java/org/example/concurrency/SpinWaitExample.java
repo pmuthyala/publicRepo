@@ -3,7 +3,7 @@ package org.example.concurrency;
 public class SpinWaitExample {
     private static volatile boolean ready;
 
-    static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         Thread worker = new Thread(() -> {
             while (!ready) {
                 Thread.onSpinWait();
