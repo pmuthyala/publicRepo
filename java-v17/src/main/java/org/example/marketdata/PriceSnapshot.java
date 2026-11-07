@@ -11,24 +11,18 @@ public record PriceSnapshot (
         long timestamp,
         long sequence
 ) {
-    public PriceSnapshot(long bid, long ask, long timestamp, long sequence) {
-        if (bid > ask) {
-            throw new IllegalArgumentException("Bid must be less than or equal to ask");
-        }
-        if (timestamp <= 0) {
-            throw new IllegalArgumentException("Timestamp must be greater than zero");
-        }
-        if (sequence <= 0) {
-            throw new IllegalArgumentException("Sequence must be greater than zero");
-        }
-        if (bid >= 0 && ask >= 0) {
-            this.bid = bid;
-            this.ask = ask;
-            this.timestamp = timestamp;
-            this.sequence = sequence;
-        } else {
+    public PriceSnapshot {
+        if (bid < 0 || ask < 0) {
             throw new IllegalArgumentException(
                     "Prices cannot be negative");
+        }
+        if (bid > ask) {
+            throw new IllegalArgumentException(
+                    "Bid cannot exceed ask");
+        }
+        if (timestamp <= 0 || sequence <= 0) {
+            throw new IllegalArgumentException(
+                    "Invalid timestamp or sequence");
         }
     }
 }
