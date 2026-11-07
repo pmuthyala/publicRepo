@@ -1,0 +1,40 @@
+
+name: Java Market Data CI
+
+on:
+  push:
+    paths:
+      - 'java-v17/**'
+      - '.github/workflows/java-marketdata.yml'
+  pull_request:
+    paths:
+      - 'java-v17/**'
+      - '.github/workflows/java-marketdata.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: java-v17
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+          cache-dependency-path: java-v17/pom.xml
+
+      - name: Build and run JUnit tests
+        run: mvn --batch-mode --no-transfer-progress verify
+
