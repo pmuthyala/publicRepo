@@ -125,13 +125,12 @@ public final class SimpleOrderBook implements AutoCloseable {
         if(old==null) {
             throw new IllegalStateException("Unknown order id: " + e.orderId());
         }
-
-        changeLevel(old.side(), old.priceTicks(), -old.quantity());
-
         Side side = e.side() !=null ? e.side() : old.side();
         if(e.priceTicks() <=0 || e.quantity() <= 0) {
             throw new IllegalArgumentException("Invalid Order Modification ");
         }
+
+        changeLevel(old.side(), old.priceTicks(), -old.quantity());
 
         orders.put(e.orderId(), new Order(side, e.priceTicks(), e.quantity()));
 
@@ -151,6 +150,7 @@ public final class SimpleOrderBook implements AutoCloseable {
     private void changeLevel(Side side, long price, long delta) {
         NavigableMap<Long, Long> levels = (side == Side.BUY) ? bids : asks;
 
+        System.out.println("changeLevel: " + side + " " + price + " " + delta);
         long updated = levels.getOrDefault(price, 0L) + delta;
 
         if(updated < 0) {
@@ -162,6 +162,7 @@ public final class SimpleOrderBook implements AutoCloseable {
         } else {
             levels.put(price, updated);
         }
+        System.out.println("changeLevel values : " + levels);
     }
 
     private void publishSnapshot() {
@@ -172,6 +173,7 @@ public final class SimpleOrderBook implements AutoCloseable {
             List.copyOf(asks.entrySet().stream().
                     map(e-> new Level(e.getKey(), e.getValue())).toList())
             );
+        System.out.println("publishSnapshot: " + latest);
     }
 
     @Override
